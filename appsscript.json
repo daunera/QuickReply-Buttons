@@ -1,0 +1,23 @@
+{
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+    "https://www.googleapis.com/auth/script.storage",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "gmail": {
+    "name": "QuickReply Buttons",
+    "logoUrl": "https://www.gstatic.com/images/icons/material/system/2x/reply_all_black_24dp.png",
+    "contextualTriggers": [{
+      "unconditional": {
+      },
+      "onTriggerFunction": "buildAddOn"
+    }],
+    "openLinkUrlPrefixes": [
+      "https://mail.google.com/"
+    ],
+    "primaryColor": "#48B84F",
+    "secondaryColor": "#48B84F",
+    "version": "TRUSTED_TESTER_V2"
+  }
+}
