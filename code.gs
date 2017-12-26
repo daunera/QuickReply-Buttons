@@ -95,8 +95,8 @@ function createButton(subject, address, text, colorFill, colorText, borderRound)
   Logger.log(borderRound);
   var defaultBorderRound = borderRound == undefined ? 5 : borderRound;
   var calculatedWidth = 100;
-  if (text.length>10)
-    calculatedWidth += (text.length-10)*8;
+  if (text.length > 10)
+    calculatedWidth += (text.length-10)*5;
   
   var buttonString = '';
   
