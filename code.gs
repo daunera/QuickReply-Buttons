@@ -71,9 +71,20 @@ function buildSection(){
     
   section.addWidget(CardService.newTextParagraph().setText('<font color="#FF0000">*required fields</font>'));
   
-  var composeAction = CardService.newAction().setFunctionName('createNewMail');
-  section.addWidget(CardService.newTextButton().setText('Create').setComposeAction(composeAction, CardService.ComposedEmailType.STANDALONE_DRAFT));
+  var notifyAction = CardService.newAction().setFunctionName('notifyUser');
+  var validateButton = CardService.newTextButton()
+  .setText('Validate')
+  .setOnClickAction(notifyAction);
   
+  var composeAction = CardService.newAction().setFunctionName('createNewMail');
+  var composeButton = CardService.newTextButton()
+    .setText('Create')
+    .setComposeAction(composeAction, CardService.ComposedEmailType.STANDALONE_DRAFT);
+  
+  section.addWidget(CardService.newButtonSet()
+   .addButton(validateButton)
+   .addButton(composeButton));
+    
   return section;
 }
 
@@ -92,7 +103,6 @@ function createButtonsTable(subject, address, text, colorFill, colorText, border
 
 function createButton(subject, address, text, colorFill, colorText, borderRound){
   var url = createMailToUrl(subject, address, text);
-  Logger.log(borderRound);
   var defaultBorderRound = borderRound == undefined ? 5 : borderRound;
   var calculatedWidth = 100;
   if (text.length > 10)
@@ -136,21 +146,37 @@ function createMailToUrl(subject, address, body){
 }
 
 function createNewMail(e){
+  Logger.log('createNewMail called');
   var accessToken = e.messageMetadata.accessToken;
   GmailApp.setCurrentMessageAccessToken(accessToken);
   var res = e['formInput'];
   var valid = validation(res);
+  Logger.log('Cvalid: '+valid);
   if(valid == true){
     var buttonsCode = createButtonsTable(res['subject'],res['replyAddress'],res['buttonTexts'],res['colorFill'],res['colorText'],res['borderRound']);
     var draft = GmailApp.createDraft('',res['subject'], '',{htmlBody: "Text here <br>"+buttonsCode})
-    
     return CardService.newComposeActionResponseBuilder().setGmailDraft(draft).build();
   }
   else{
-    //TODO: give user response
-    Logger.log(valid);
     return null;
   }
+}
+
+function notifyUser(e){
+  Logger.log('notifyUser called');
+  var accessToken = e.messageMetadata.accessToken;
+  GmailApp.setCurrentMessageAccessToken(accessToken);
+  var res = e['formInput'];
+  var valid = validation(res);
+  Logger.log('Nvalid: '+valid);
+  if(valid == true){
+    valid = "Everything's okay"
+  }
+  return CardService.newActionResponseBuilder()
+      .setNotification(CardService.newNotification()
+        .setText(valid)
+        .setType(CardService.NotificationType.INFO))
+      .build()
 }
 
 function rememberAction(e){
@@ -190,7 +216,6 @@ function rememberAction(e){
 
 function getState(property){
   var propertyValue = PropertiesService.getUserProperties().getProperty(property);
-  Logger.log(propertyValue);
   if(property == 'remember'){
     if(propertyValue == null)
       return false;
@@ -219,28 +244,32 @@ function suggestEmail(){
 function validation(res){
 
   var emptyFields = [];
+  if(!('subject' in res))
+    emptyFields.push('Subject');
   if(!('replyAddress' in res))
     emptyFields.push('Reply Address');
   else{
-    //TODO: check valid mail address
+    if(!(validateEmail(res['replyAddress'])))
+      return 'Wrong Reply Address email format';
   }
-  if(!('subject' in res))
-    emptyFields.push('Subject');
   if(!('buttonTexts' in res))
     emptyFields.push('Button Texts');
-  if(!('colorFill' in res))
-    emptyFields.push('Color Fill');
-  else{
-    //TODO: check valid hexa code
-  }
   if(!('colorText' in res))
-    emptyFields.push('Color Text');
+    emptyFields.push('Text & Border Color');
   else{
-    //TODO: check valid hexa code
+    if(!(validateHex(res['colorText'])))
+      return 'Wrong Text Color Hex Code format';
   }
-  
+  if(!('colorFill' in res))
+    emptyFields.push('Fill Color');
+  else{
+    if(!(validateHex(res['colorFill'])))
+      return 'Wrong Fill Color Hex Code format';
+  }
   if(emptyFields.length == 0)
     return true;
+  else if (emptyFields.length == 1)
+    return 'Empty field: '+emptyFields[0];
   else{
     var errorEmpty = 'Empty fields: ';
     for(var i = 0; i < emptyFields.length; i++){
@@ -250,4 +279,18 @@ function validation(res){
     }
     return errorEmpty;
   }
+}
+
+function validateEmail(string){
+  //TODO: validate email
+  /*var pattern = new RegExp('.+@.+');
+  Logger.log('email: '+string);
+  Logger.log('test: '+pattern.test(string));
+  //return pattern.test(string);*/
+  return true;
+}
+
+function validateHex(string){
+  var pattern = new RegExp('#[1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,A,B,C,D,E,F]{6}');
+  return pattern.test(string);
 }
