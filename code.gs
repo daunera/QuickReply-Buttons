@@ -34,7 +34,6 @@ function buildSection(){
     .setFieldName('replyAddress')
     .setTitle('Reply Address*')
     .setValue(getState('replyAddress'))
-    .setSuggestions(suggestEmail())
     .setOnChangeAction(CardService.newAction().setFunctionName('rememberAction')));
     
   section.addWidget(CardService.newTextParagraph().setText('<br><b><font color="#48B84F">Button</font></b>'));
@@ -146,12 +145,10 @@ function createMailToUrl(subject, address, body){
 }
 
 function createNewMail(e){
-  Logger.log('createNewMail called');
   var accessToken = e.messageMetadata.accessToken;
   GmailApp.setCurrentMessageAccessToken(accessToken);
   var res = e['formInput'];
   var valid = validation(res);
-  Logger.log('Cvalid: '+valid);
   if(valid == true){
     var buttonsCode = createButtonsTable(res['subject'],res['replyAddress'],res['buttonTexts'],res['colorFill'],res['colorText'],res['borderRound']);
     var draft = GmailApp.createDraft('',res['subject'], '',{htmlBody: "Text here <br>"+buttonsCode})
@@ -163,12 +160,10 @@ function createNewMail(e){
 }
 
 function notifyUser(e){
-  Logger.log('notifyUser called');
   var accessToken = e.messageMetadata.accessToken;
   GmailApp.setCurrentMessageAccessToken(accessToken);
   var res = e['formInput'];
   var valid = validation(res);
-  Logger.log('Nvalid: '+valid);
   if(valid == true){
     valid = "Everything's okay"
   }
@@ -226,21 +221,6 @@ function getState(property){
   return propertyValue;
 }
 
-function suggestEmail(){
-  var suggestions = CardService.newSuggestions();
-  
-  var emailBase = Session.getActiveUser().getEmail();
-  var emailArray = emailBase.split('@');
-  
-  var emailAnswer = emailArray[0]+'+answer@'+emailArray[1];
-  var emailReply = emailArray[0]+'+reply@'+emailArray[1];
-  
-  suggestions.addSuggestions([emailBase,emailAnswer,emailReply]);
-  
-  return suggestions;
-
-}
-
 function validation(res){
 
   var emptyFields = [];
@@ -286,11 +266,12 @@ function validateEmail(string){
   /*var pattern = new RegExp('.+@.+');
   Logger.log('email: '+string);
   Logger.log('test: '+pattern.test(string));
-  //return pattern.test(string);*/
+  return pattern.test(string);*/
   return true;
 }
 
 function validateHex(string){
   var pattern = new RegExp('#[1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,A,B,C,D,E,F]{6}');
-  return pattern.test(string);
+  //return pattern.test(string);
+  return true
 }
