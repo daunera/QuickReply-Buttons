@@ -4,7 +4,7 @@ function insertButtons(e){
   
   if (check === 'Ok'){
     check = '';
-    var htmlContent = 'Text here<br>'+createButtonsTable(res);
+    var htmlContent = createButtonsTable(res);
     
     
     
@@ -32,7 +32,7 @@ function createButtonsTable(res){
   
   var buttonsTable = '<table><tr>';
   for (var i = 0; i < texts.length; i++) {
-    var buttonText = texts[i].trim();
+    var buttonText = texts[i].trim().replace(/;/g,',');
     buttonsTable += '<td>';
     buttonsTable += createButton(res.subject, res.replyAddress, buttonText, colorText, colorFill, colorBorder, borderRound);
     buttonsTable += '</td>';

@@ -16,7 +16,7 @@ function buildCard(status, platform){
                      .setOnClickAction(CardService.newAction().setFunctionName('deleteData')));
   
   card.setHeader(CardService.newCardHeader()
-                 .setTitle('Create your own reply buttons')
+                 .setTitle('Create your own "smart" reply buttons')
                  .setImageUrl('https://www.gstatic.com/images/icons/material/system/2x/library_add_black_24dp.png'));
   
   card.addSection(buildSection(status, platform));
@@ -31,14 +31,14 @@ function buildSection(status, platform){
     section.addWidget(CardService.newTextParagraph().setText('<font color="#ff0000">'+status+'</font>'));
   }
   
-  section.addWidget(CardService.newTextParagraph().setText('<br><b><font color="'+SECONDARY_COLOR+'">Mail</font></b>'));
+  section.addWidget(CardService.newTextParagraph().setText('<br><b><font color="'+SECONDARY_COLOR+'">Response mail info</font></b>'));
   
   section.addWidget(buildTextInput('subject', 'Response Subject (required)', 'Without "Re:" prefix, usually same as your mail subject'));
   section.addWidget(buildTextInput('replyAddress', 'Reply Address (required)', 'Where the buttons\' link will point'));
   
-  section.addWidget(CardService.newTextParagraph().setText('<br><b><font color="'+SECONDARY_COLOR+'">Button</font></b>'));
+  section.addWidget(CardService.newTextParagraph().setText('<br><b><font color="'+SECONDARY_COLOR+'">Buttons\' look</font></b>'));
   
-  section.addWidget(buildTextInput('buttonTexts', 'Button Texts (required)', 'Separate by comma, whitespace allowed, but trimmed'));
+  section.addWidget(buildTextInput('buttonTexts', 'Button Texts (required)', 'Separate by comma, whitespace allowed, but trimmed. To use comma, write semicolon and it will be changed'));
   section.addWidget(buildTextInput('colorText', 'Text Color (Hex code)', 'By default Google blue (#4885ed)'));
   section.addWidget(buildTextInput('colorFill', 'Fill Color (Hex code)', 'By default white'));
   section.addWidget(buildTextInput('colorBorder', 'Border Color (Hex code)', 'By default same as text color'));
