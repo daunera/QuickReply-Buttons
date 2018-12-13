@@ -17,7 +17,7 @@ function buildCard(status, platform){
   
   card.setHeader(CardService.newCardHeader()
                  .setTitle('Create your own "smart" reply buttons')
-                 .setImageUrl('https://www.gstatic.com/images/icons/material/system/2x/library_add_black_24dp.png'));
+                 .setImageUrl('http://varosmajor.cserkesz.hu/qrb/reply.png'));
   
   card.addSection(buildSection(status, platform));
   
