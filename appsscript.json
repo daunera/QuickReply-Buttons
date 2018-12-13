@@ -1,23 +1,27 @@
 {
   "oauthScopes": [
-    "https://www.googleapis.com/auth/gmail.addons.execute",
-    "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
     "https://www.googleapis.com/auth/script.storage",
-    "https://www.googleapis.com/auth/userinfo.email"
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.addons.current.action.compose"
   ],
   "gmail": {
     "name": "QuickReply Buttons",
-    "logoUrl": "https://www.gstatic.com/images/icons/material/system/2x/reply_all_black_24dp.png",
-    "contextualTriggers": [{
-      "unconditional": {
-      },
-      "onTriggerFunction": "buildAddOn"
-    }],
+    "logoUrl": "http://varosmajor.cserkesz.hu/qrb/icon.png",
+    "composeTrigger": {
+      "selectActions": [
+        {
+          "text": "Generate quick reply buttons",
+          "runFunction": "buildAddOn"
+        }
+      ],
+      "draftAccess": "NONE"
+    },
+    "primaryColor": "#fb6f62",
+    "secondaryColor": "#a4e46b",
     "openLinkUrlPrefixes": [
-      "https://mail.google.com/"
+      "https://github.com/daunera"
     ],
-    "primaryColor": "#48B84F",
-    "secondaryColor": "#48B84F",
     "version": "TRUSTED_TESTER_V2"
   }
 }
