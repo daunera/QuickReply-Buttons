@@ -5,15 +5,26 @@ A Gmail Add-on, which brings the Android Gmail app 'Smart Reply' buttons functio
 
 ## About the Add-on
 
-### Options:
-- __reply address__ (with some suggestions based on your mail address)
-- __subject__: You have to set this before create the buttons, because the reply mail has the "Re: [subject]" format.
-- __button texts__: You can create 1 or more buttons, if you seperate the button text with comma.
-- __text and border color__ (with hex code of colors - [pick some here](http://www.color-hex.com/))
-- __fill color__ (with hex codes)
-- __border rounded__: default is 5 (the Smart Reply buttons has probably 4 or 5 in this metric)
+With this Gmail add-on, you can create a sets of bulletproof buttons in your mails. These buttons has a mailto link back to the sender with button-specific answer. 
 
-You can save in the add-on your setting with the 'Remember the sets' checkbox.
+A usage for example:
+
+You have to ask a group of people about something and you want from everyone a quick reply mail with 'Ok', 'Got it', 'Can't make' etc. answers. Create buttons some of these answers and send to them in the mail. They just have to click on one of them, then send the premade mail back to you. So simple :)
+
+You can reach the add-on
+- on web the draft panel bottom line/tray next to the send button and the basic features button wiht a Re: logo
+- on mobile the top right menu's last element
+
+### Options:
+- __reply address__: Where the buttons' mailto link will point
+- __subject__: The reply mails subject, without "Re:" prefix, usually same as your mail subject
+- __button texts__: You can create 1 or more buttons, if you seperate the button text with comma. Whitespace allowed, but trimmed. To use comma, write semicolon and it will be changed
+- __text color__: by defualt Google blue (##4885ed) (with hex code of colors - [pick some here](http://www.color-hex.com/))
+- __fill color__: by default white  (with hex codes)
+- __border color__: by default same as text color (with hex code)
+- __border rounded__: number between 1 and 10, default is 5 (the Smart Reply buttons has probably 4 or 5 in this metric)
+
+Save your settings automatically.
 
 ### Preview
 
@@ -30,4 +41,7 @@ You can install a developer add-on's deployment with the following steps:
 
 Once installed, the add-on is immediately available in Gmail. You may need to refresh the Gmail tab before the add-on appears.
 
-Deployment ID: __AKfycbzx8bmzbPQsM4I-rzejRrpy1NWtLnULUPTDVEKQFb8__
+Deployment ID: 
+- for @gmail.com domain: <b>AKfycbz2G1WrUXaKJ3T9ZHz-8Omp1kbYgIE9fZa0LT2uGAVe1k4BdWSRPoB2wnBSunnWXtRG</b>
+- for @cserkesz.hu doamin: <b>AKfycbzklWsMuh74gmseY0TKTtfXaHhaoMvzurr1PE9zkryK6f1w863Y8ZQjP2albFzblp7Jtw</b>
+ 
